@@ -27,24 +27,27 @@ class AnnexaSpider(scrapy.Spider):
             item = DepartmentItem()
             item['department'] = response.meta['department']
             departmentinfo = response.xpath('//tr/*[2]').extract()
-            item['name'] = departmentinfo[0]
-            item['tel'] = departmentinfo[1]
-            item['fax'] = departmentinfo[2]
-            item['address'] = departmentinfo[3]
+            item['name'] = str.join("", Selector(text = departmentinfo[0]).xpath('//text()').extract()).strip()
+            item['tel'] = str.join("", Selector(text = departmentinfo[1]).xpath('//text()').extract()).strip()
+            item['fax'] = str.join("", Selector(text = departmentinfo[2]).xpath('//text()').extract()).strip()
+            item['address'] = str.join("\n", Selector(text = departmentinfo[3]).xpath('//text()').extract()).strip()
             item['homepage'] = homepage
             yield item
         else:
             tablexpaths = response.xpath('//body/table[count(tr)=4]')
             for idtable, tablexpath in enumerate(tablexpaths):
                 item = DepartmentItem()
-                subdep = str.join("", Selector(text = tablexpath.xpath('preceding-sibling::*[1]').extract()[0]).xpath('//text()').extract()).strip()
+                if "police" in homepage:
+                    subdep = str.join("", Selector(text = tablexpath.xpath('preceding-sibling::*[2]').extract()[0]).xpath('//text()').extract()).strip()
+                else:
+                    subdep = str.join("", Selector(text = tablexpath.xpath('preceding-sibling::*[1]').extract()[0]).xpath('//text()').extract()).strip()
                 item['department'] = response.meta['department']
                 item['subdepartment'] = subdep
                 subdepartmentinfo = tablexpath.xpath('tr/*[2]').extract()
                 print "subdepartmentinfo: ", subdepartmentinfo
-                item['name'] = subdepartmentinfo[0]
-                item['tel'] = subdepartmentinfo[1]
-                item['fax'] = subdepartmentinfo[2]
-                item['address'] = subdepartmentinfo[3]
+                item['name'] = str.join("", Selector(text = subdepartmentinfo[0]).xpath('//text()').extract()).strip()
+                item['tel'] = str.join("", Selector(text = subdepartmentinfo[1]).xpath('//text()').extract()).strip()
+                item['fax'] = str.join("", Selector(text = subdepartmentinfo[2]).xpath('//text()').extract()).strip()
+                item['address'] = str.join("\n", Selector(text = subdepartmentinfo[3]).xpath('//text()').extract()).strip()
                 item['homepage'] = homepage
                 yield item
