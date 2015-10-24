@@ -6,7 +6,7 @@ teldirati <- teldirati[,list(department, subdepartment, name, tel, fax, email, a
 setnames(teldirati, c("Dept", "Subdept", "Name", "Telephone", "Fax", "Email", "Address", "Homepage"))
 
 shinyServer(function(input, output) {
-    output$teldir <- renderDataTable({
+    output$teldirati <- renderDataTable({
         teldirati
     })
 
