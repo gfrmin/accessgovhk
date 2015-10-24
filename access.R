@@ -15,3 +15,7 @@ teldir <- fread("https://hkdata.dataguru.hk/assets/teldir.csv")
 setkey(ati, tel)
 setkey(teldir, tel)
 teldirati <- teldir[,list(tel,email)][ati]
+setkey(teldirati, department, subdepartment, email)
+teldirati <- unique(teldirati)
+
+write.csv(teldirati, file = "teldirati.csv", row.names = FALSE)
