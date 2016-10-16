@@ -41,7 +41,7 @@ class NewAccessSpider(scrapy.Spider):
             for sectionid, subdepartmentsection in enumerate(response.css("h3::text").extract()):
                 subdepartmentinfo = departmentinfo[(sectionid*5):((sectionid+1)*5)]
                 item = DepartmentItem()
-                item['department'] = departmentname + "\n" + subdepartmentsection.strip()
+                item['department'] = departmentname + " " + subdepartmentsection.strip()
                 item['name'] = str.join("", Selector(text = subdepartmentinfo[0]).xpath('//text()').extract()).strip()
                 item['tel'] = str.join("", Selector(text = subdepartmentinfo[1]).xpath('//text()').extract()).strip()
                 item['fax'] = str.join("", Selector(text = subdepartmentinfo[2]).xpath('//text()').extract()).strip()
