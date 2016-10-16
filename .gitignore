@@ -1,6 +1,7 @@
 *.pyc
 *~
 *.csv
+*.txt
 *.json
 .Rhistory
 *.bts
