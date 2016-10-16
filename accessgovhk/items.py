@@ -10,11 +10,10 @@ import scrapy
 class DepartmentItem(scrapy.Item):
     # define the fields for your item here like:
     department = scrapy.Field()
-    subdepartment = scrapy.Field()
     name = scrapy.Field()
     tel = scrapy.Field()
     fax = scrapy.Field()
     address = scrapy.Field()
+    email = scrapy.Field()
     homepage = scrapy.Field()
-    lastrevisiondate = scrapy.Field()
     
